@@ -11,3 +11,5 @@ We will use Insult Generator API by Lakerolmaker to randomly query an insult.
 2. Gerard
 3. Priyam
 
+## App Sketch
+![Image Sketch](assets/images/eat-shit-demo.png)
