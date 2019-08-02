@@ -10,14 +10,47 @@ html {
 
 body {
     background: #212223;
+    font-family: 'Varela Round', sans-serif;
 }
+
+h6 {
+    margin-bottom: 12px;
+}
+
 
 #es-logo {
     max-width: 500px;
+    z-index: 100;
+}
+
+#es-button {
+    width: 100px;
+}
+
+.inp-radius {
+    border-radius: 50px 0px 0px 50px;
+    width: 250px;
+}
+
+.btn-radius {
+    border-radius: 0px 50px 50px 0px;
+    background: #ef413a;
+    border: 1px solid #ef413a;
+}
+
+.btn2 {
+    border-radius: 50px;
+    letter-spacing: .03em;
+}
+
+.btn-radius:hover {
+    background: #cc3737;
+    border: 1px solid #ef413a;
 }
 
 .foodimg {
     position: absolute;
+    transition-duration: 200ms;
 }
 
 #chicken {
@@ -45,7 +78,7 @@ body {
 }
 
 #spag {
-    top: 50%;
+    top: 400px;
     left: -30px;
     max-width: 200px;
 }
@@ -54,4 +87,90 @@ body {
     bottom: -35px;
     left: 200px;
     max-width: 200px;
+}
+
+@media(max-width: 900px) {
+
+    #es-logo {
+        max-width: 400px;
+    }
+
+    #chicken {
+        top: -10px;
+        right: 100px;
+        max-width: 180px;
+    }
+
+    #ramen {
+        top: 90px;
+        right: -20px;
+        max-width: 120px;
+    }
+
+    #cookies {
+        top: -2px;
+        left: -10px;
+        max-width: 160px;
+    }
+
+    #steak {
+        bottom: -35px;
+        right: 50px;
+        max-width: 200px;
+    }
+
+    #spag {
+        top: 500px;
+        left: -30px;
+        max-width: 150px;
+    }
+
+    #pancakes {
+        bottom: -35px;
+        left: 100px;
+        max-width: 160px;
+    }
+
+
+}
+
+@media(max-width: 450px) {
+
+    #es-logo {
+        max-width: 400px;
+    }
+
+    #chicken {
+        top: -10px;
+        right: 0px;
+        max-width: 150px;
+    }
+
+    #ramen {
+        display: none;
+    }
+
+    #cookies {
+        top: -2px;
+        left: -10px;
+        max-width: 160px;
+    }
+
+    #steak {
+        bottom: -35px;
+        right: -20px;
+        max-width: 150px;
+    }
+
+    #spag {
+        display: none
+    }
+
+    #pancakes {
+        bottom: -35px;
+        left: 0px;
+        max-width: 160px;
+    }
+
+
 }

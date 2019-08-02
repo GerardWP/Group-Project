@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="./assets/css/style.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap" rel="stylesheet">
 </head>
 
 <body class="d-flex flex-column vh-100 m-0 justify-content-center">
@@ -27,8 +28,21 @@
     <img src="./assets/images/spag.svg" alt="Spag" class="foodimg" id="spag">
     <img src="./assets/images/steak.svg" alt="Steak" class="foodimg" id="steak">
 
-    <div class="container d-flex flex-column align-items-center mx-auto bg-transparent"> <img
-            src="./assets/images/es-logo.svg" id="es-logo" alt="Eat Sh*t Logo"></div>
+    <div class="container d-flex flex-column align-items-center mx-auto bg-transparent">
+        <img src="./assets/images/es-logo.svg" id="es-logo" alt="Eat Sh*t Logo" class="mb-5">
+        <form class="d-flex">
+            <div class="form-group mx-sm-3 mb-2 d-flex">
+                <input type="text" class="form-control border-0 inp-radius" id="inputPassword2"
+                    placeholder="Enter Suburb">
+                <button type="submit" class="btn btn-primary mb-2 btn-radius"> <img src="./assets/images/no-outline.svg"
+                        id="es-button" alt="Eat Sh*t Logo"></button>
+            </div>
+        </form>
+        <h6 class="text-secondary">— OR —</h6>
+        <button type="submit" class="btn btn-primary mb-2 btn-radius btn2 font-weight-bold"> <img
+                src="./assets/images/no-outline.svg" id="es-button" alt="Eat Sh*t Logo"> in your current
+            location</button>
+    </div>
 
 
     <script src="./assets/javascript/script.js"></script>
