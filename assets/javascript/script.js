@@ -83,36 +83,7 @@ function play() {
 
 //Autofill suburb field using Google Places
 var autocomplete;
-
-//Gives autofill options on "Suburb" field
-function initAutocomplete() {
-  autocomplete = new google.maps.places.Autocomplete(
-    document.getElementById("autocomplete"),
-    {
-      types: ["(cities)"]
-    }
-  );
-}
-
-//Gets current geo location
-function geolocate() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      var geolocation = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
-      var circle = new google.maps.Circle({
-        center: geolocation,
-        radius: position.coords.accuracy
-      });
-      autocomplete.setBounds(circle.getBounds());
-    });
-  }
-}
-
-//Autofill suburb field using Google Places
-var autocomplete;
+var infoWindow;
 
 //Gives autofill options on "Suburb" field
 function initAutocomplete() {
@@ -122,19 +93,16 @@ function initAutocomplete() {
   );
 }
 
-//Gets current geo location
+// Gets current geo location
 function geolocate() {
+  //Check if it can find the current location
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
+      //Saves the current location in variable as longitutde and latitude
       var geolocation = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
-      var circle = new google.maps.Circle({
-        center: geolocation,
-        radius: position.coords.accuracy
-      });
-      autocomplete.setBounds(circle.getBounds());
     });
   }
 }
