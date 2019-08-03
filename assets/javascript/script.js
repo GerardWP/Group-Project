@@ -75,3 +75,28 @@ function play() {
     let x = source.start(0);
 }
 
+
+//Autofill suburb field using Google Places
+var autocomplete;
+
+//Gives autofill options on "Suburb" field
+function initAutocomplete() {
+  autocomplete = new google.maps.places.Autocomplete( document.getElementById('autocomplete'), {types: ['(cities)']});
+}
+
+//Gets current geo location
+function geolocate() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var geolocation = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      var circle = new google.maps.Circle(
+          {center: geolocation, radius: position.coords.accuracy});
+      autocomplete.setBounds(circle.getBounds());
+    });
+  }
+};
+
+
