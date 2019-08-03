@@ -14,6 +14,8 @@ function textToSpeech(string) {
         }
     }
 
+    var audio;
+
     $.ajax({
         url: "https://texttospeech.googleapis.com/v1beta1/text:synthesize?key=AIzaSyDFxmA0dJPQQvj_K20QPqdHBdPfqfNKQQs",
         dataType: "json",
@@ -22,16 +24,20 @@ function textToSpeech(string) {
         data: JSON.stringify(data),
         processData: false,
         success: function (response) {
-            console.log(atob(response.audioContent));
-            return test = Uint8Array.from(atob(response.audioContent), c => c.charCodeAt(0));
+            //convert the base-64 encoded string into a byte array
+            audio = Uint8Array.from(atob(response.audioContent), c => c.charCodeAt(0));
+        },
+        complete: function(){
+            init();
+            playByteArray(audio);
         }
     });
 }
 
-// var test;
 var context; // Audio context
 var buf; // Audio buffer
 
+//initialize audio context for each new audio file
 function init() {
     if (!window.AudioContext) {
         if (!window.webkitAudioContext) {
@@ -40,10 +46,10 @@ function init() {
         }
         window.AudioContext = window.webkitAudioContext;
     }
-    console.log('create audio context')
     context = new AudioContext();
 }
 
+//function for playing an array of bytes
 function playByteArray(byteArray) {
 
     var arrayBuffer = new ArrayBuffer(byteArray.length);
@@ -52,18 +58,14 @@ function playByteArray(byteArray) {
         bufferView[i] = byteArray[i];
     }
 
-    console.log('before decode');
-
     let x = context.decodeAudioData(arrayBuffer, function (buffer) {
         buf = buffer;
-        console.log('after decode');
         play();
     }).catch(err => console.error(err));
 }
 
 // Play the loaded file
 function play() {
-    console.log('play');
     // Create a source node from the buffer
     var source = context.createBufferSource();
     source.buffer = buf;
@@ -73,10 +75,3 @@ function play() {
     let x = source.start(0);
 }
 
-var test = textToSpeech("I hope you get food poisoning");
-
-$("#click").on("click", function () {
-    
-    init();
-    playByteArray(test);
-})
