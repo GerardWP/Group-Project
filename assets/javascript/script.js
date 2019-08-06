@@ -1,3 +1,5 @@
+$(document).ready(geolocate());
+
 //function for converting a string to an mp3 byte array
 function textToSpeech(string) {
     //creating the request body of the query
@@ -92,6 +94,7 @@ function initAutocomplete() {
         }
     );
 }
+var geolocation;
 
 // Gets current geo location
 function geolocate() {
@@ -99,20 +102,25 @@ function geolocate() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
             //Saves the current location in variable as longitutde and latitude
-            var geolocation = {
+            geolocation = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
+            // return geolocation;
+            console.log("geolocate");
         });
     }
+
 }
 
 /* Creating on-click function to run ajax GET on the google places API, using the  users current suburb
 which we get from either the input val(), or the users current location  */
 
+var locLAT, locLNG;
+var apiKey = "AIzaSyAWEtBeR_Jx7m6NFIKjF3y0tgIOxZ2HDek";
+
 $("#es-button").on("click", function (e) {
     e.preventDefault();
-    var apiKey = "AIzaSyAWEtBeR_Jx7m6NFIKjF3y0tgIOxZ2HDek";
     var location = $("#autocomplete").val();
 
     var queryURL =
@@ -121,7 +129,6 @@ $("#es-button").on("click", function (e) {
         "&key=" +
         apiKey;
 
-    var locLAT, locLNG;
 
     $.ajax({
         url: queryURL,
@@ -129,28 +136,56 @@ $("#es-button").on("click", function (e) {
         success: function (response) {
             locLAT = response.results[0].geometry.location.lat;
             locLNG = response.results[0].geometry.location.lng;
-        },
-        complete: function () {
-            console.log("latitude " + locLAT);
-            console.log("longitude " + locLNG);
-
-            var searchURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + locLAT + "," + locLNG + "&radius=2000&type=restaurant&key=" + apiKey;
-
-            jQuery.ajaxPrefilter(function (options) {
-                if (options.crossDomain && jQuery.support.cors) {
-                    options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
-                }
-            });
-
-            $.ajax({
-                url: searchURL,
-                method: "GET"
-            }).then(function (resp) {
-
-                console.log(resp)
-
-            });
-
+            refineResults(locLAT, locLNG);
         }
     });
 });
+
+
+function refineResults(locLAT, locLNG) {
+    console.log("latitude " + locLAT);
+    console.log("longitude " + locLNG);
+
+    var searchURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + locLAT + "," + locLNG + "&radius=5000&type=restaurant&key=" + apiKey;
+
+    jQuery.ajaxPrefilter(function (options) {
+        if (options.crossDomain && jQuery.support.cors) {
+            options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+        }
+    });
+
+    $.ajax({
+        url: searchURL,
+        method: "GET",
+        cache: false,
+    }).then(function (resp) {
+        console.log(resp)
+        var newURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "key=" + apiKey + '&pagetoken=' + encodeURIComponent(resp.next_page_token);
+        console.log(resp.results.length);
+        console.log(resp.results);
+        var placeArray = resp.results.map(function (item) {
+            return {
+                rating: item.rating,
+                name: item.name,
+                address: item.vicinity
+            }
+        });
+
+        placeArray.sort(function (val1, val2) {
+            return val1.rating - val2.rating;
+        })
+
+        console.log(placeArray);
+    });
+
+}
+
+$("#current-location").on("click", function (e) {
+    event.preventDefault();
+    geolocate();
+    var currentLocation = geolocation;
+    console.log("current location", currentLocation);
+    locLAT = currentLocation.lat;
+    locLNG = currentLocation.lng;
+    refineResults(locLAT, locLNG);
+})
