@@ -89,6 +89,23 @@ h6 {
     max-width: 200px;
 }
 
+#eat-this,
+#eat-other {
+    border-radius: 50px 50px 50px 50px;
+}
+
+p#information {
+    height: 500px;
+    width: 500px;
+    background: #ef413a;
+    color: #fff;
+}
+
+#info-screen {
+    visibility: hidden;
+    height: 0;
+}
+
 @media(max-width: 900px) {
 
     #es-logo {
