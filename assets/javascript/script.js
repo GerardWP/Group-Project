@@ -228,7 +228,7 @@ function hideAndGo() {
     $("#eat-other").on("click", getAndPlay);
 }
 
-//function to get current restaurant and
+//function to get current restaurant and remove it from the array
 function getAndPlay() {
     var text = randomWords();
     var string =
@@ -254,16 +254,8 @@ $("#current-location").on("click", function(event) {
 });
 
 $(document).ready(function() {
-    //get our data from database
+    
     geolocate();
+    //get our data from database
     getData();
-
-    // $("#current-location, #es-button").on("click", function(event) {
-    //     event.preventDefault();
-    //     setTimeout(function() {
-    //         $("#start-screen").css("visibility", "hidden");
-    //         $("#start-screen").css("height", "0px");
-    //         $("#info-screen").css("visibility", "visible");
-    //     }, 2000);
-    // });
 });
