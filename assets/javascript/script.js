@@ -120,6 +120,7 @@ function play() {
 //Autofill suburb field using Google Places
 var autocomplete;
 var infoWindow;
+var geolocation;
 
 //Gives autofill options on "Suburb" field
 function initAutocomplete() {
@@ -127,7 +128,6 @@ function initAutocomplete() {
         types: ["(cities)"]
     });
 }
-var geolocation;
 
 // Gets current geo location
 function geolocate() {
@@ -139,8 +139,6 @@ function geolocate() {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
-            // return geolocation;
-            console.log("geolocate");
         });
     }
 }
@@ -167,6 +165,13 @@ $("#es-button").on("click", function(e) {
             refineResults(locLAT, locLNG);
         }
     });
+});
+
+$("#current-location").on("click", function(event) {
+    event.preventDefault();
+    locLAT = geolocation.lat;
+    locLNG = geolocation.lng;
+    refineResults(locLAT, locLNG);
 });
 
 function refineResults(locLAT, locLNG) {
@@ -199,13 +204,18 @@ function refineResults(locLAT, locLNG) {
             apiKey +
             "&pagetoken=" +
             encodeURIComponent(resp.next_page_token);
+
         console.log(resp.results.length);
         console.log(resp.results);
+
         placeArray = resp.results.map(function(item) {
             return {
                 rating: item.rating,
                 name: item.name,
-                address: item.vicinity
+                address: item.vicinity,
+                placeid: item.place_id,
+                lat: item.geometry.location.lat,
+                lng: item.geometry.location.lng
             };
         });
 
@@ -213,49 +223,111 @@ function refineResults(locLAT, locLNG) {
             return val1.rating - val2.rating;
         });
 
-        console.log(placeArray);
+        //For debugging purposes only
+        console.log("-----------");
+        for(var i=0; i<placeArray.length; i++) {
+            console.log(placeArray[i]);
+        }
 
         hideAndGo();
     });
 }
+
 
 //function for hiding the start screen after either of the buttons are clicked
 function hideAndGo() {
     $("#start-screen").css("visibility", "hidden");
     $("#start-screen").css("height", "0px");
     $("#info-screen").css("visibility", "visible");
+    // $("#info-screen").css("height", "200px");
+    $("#start-again").css("visibility", "visible");
+    
     getAndPlay();
-    $("#eat-other").on("click", getAndPlay);
+    $("#eat-other").on("click", eatOther);
+    $("#eat-this").on("click", eatThis);
 }
 
-//function to get current restaurant and remove it from the array
+var count = 0;
+
+//To get next restaurant
+function eatOther(event) {
+    event.preventDefault();
+    count++;
+    getAndPlay();
+}
+
+//function to get current restaurant
 function getAndPlay() {
     var text = randomWords();
     var string =
-        text[0] +
-        placeArray[0].name +
-        "? It received " +
-        placeArray[0].rating +
-        " out of 5 stars. As their famous saying goes. " +
-        text[1];
-    placeArray.shift();
-    $("#information").text(string);
+    text[0] +
+    placeArray[count].name +
+    "? It received " +
+    placeArray[count].rating +
+    " out of 5 stars. As their famous saying goes. " +
+    text[1];
+    
     textToSpeech(string);
+    
+    //display textToSpeech
+    $("#information").text(string);
+    
 }
 
-$("#current-location").on("click", function(event) {
+function eatThis(event) {
     event.preventDefault();
-    geolocate();
-    var currentLocation = geolocation;
-    console.log("current location", currentLocation);
-    locLAT = currentLocation.lat;
-    locLNG = currentLocation.lng;
-    refineResults(locLAT, locLNG);
-});
 
-$(document).ready(function() {
+    $("#info-screen").css("visibility", "hidden");
+    $("#info-screen").css("height", "0px");
     
+    $("#end-screen").css("visibility", "visible");
+    $("#start-again").css("visibility", "visible");
+    
+    //display Restaurant Name
+    $("#restaurant-name").text(placeArray[count].name);
+    
+    //display Restaurant Address with a link to Google Maps
+    $("#restaurant-address").text(placeArray[count].address);
+    $("#google-maps").attr("href", "https://www.google.com/maps/search/?api=1&query=" + placeArray[count].lat + "," + placeArray[count].lng +"&query_place_id=" + placeArray[count].placeid);
+}
+
+function start() {
+    clearContent();
+    //get current location
     geolocate();
     //get our data from database
     getData();
+}
+
+function clearContent() {
+    $("#start-screen").css("visibility", "visible");
+    
+    $("#info-screen").css("visibility", "hidden");
+    $("#info-screen").css("height", "0px");
+    
+    $("#end-screen").css("visibility", "hidden");
+    $("#end-screen").css("height", "0px");
+    
+    $("#start-again").css("visibility", "hidden");
+    $("#start-again").css("height", "0px");
+}
+
+
+$("#startagain-btn").on("click", function(event) {
+    event.preventDefault();
+    count = 0;
+    placeArray = [];
+    
+    $("#information").empty();
+    $("#restaurant-name").empty();
+    $("#restaurant-address").empty();
+    $("#google-maps").attr("href", "#"); 
+
+    $("#eat-other").off();
+
+    clearContent();
+});
+
+$(document).ready(function() {
+    start();
 });
