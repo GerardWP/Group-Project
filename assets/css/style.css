@@ -90,11 +90,25 @@ h6 {
 }
 
 #eat-this,
-#eat-other {
+#eat-other,
+#google-maps-btn,
+#startagain-btn {
     border-radius: 50px 50px 50px 50px;
 }
 
-p#information {
+#restaurant-name {
+    color: #fff
+}
+
+#restaurant-address {
+    color: #fff
+}
+
+#restaurant-address:hover {
+    color: red
+}
+
+#information {
     height: 500px;
     width: 500px;
     background: #ef413a;
@@ -104,6 +118,10 @@ p#information {
 #info-screen {
     visibility: hidden;
     height: 0;
+}
+
+#start-again {
+    margin-top: 150px;
 }
 
 @media(max-width: 900px) {
