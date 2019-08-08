@@ -173,6 +173,7 @@ $("#es-button").on("click", function(e) {
             locLAT = response.results[0].geometry.location.lat;
             locLNG = response.results[0].geometry.location.lng;
             refineResults(locLAT, locLNG);
+
         }
     });
 });
@@ -182,6 +183,7 @@ $("#current-location").on("click", function(event) {
     locLAT = geolocation.lat;
     locLNG = geolocation.lng;
     refineResults(locLAT, locLNG);
+
 });
 
 function refineResults(locLAT, locLNG) {
@@ -248,9 +250,15 @@ function refineResults(locLAT, locLNG) {
 function hideAndGo() {
     $("#start-screen").css("visibility", "hidden");
     $("#start-screen").css("height", "0px");
+
     $("#info-screen").css("visibility", "visible");
-    // $("#info-screen").css("height", "200px");
-    $("#start-again").css("visibility", "visible");
+
+    $("#eat-this").css("display", "block");
+    $("#eat-other").css("display", "block");
+
+    $("#google-maps").css("display", "none");
+
+    $("#spinner").removeClass("loader");
     
     getAndPlay();
     $("#eat-other").on("click", eatOther);
@@ -289,11 +297,10 @@ function eatThis(event) {
     event.preventDefault();
     stop();
     
-    $("#info-screen").css("visibility", "hidden");
-    $("#info-screen").css("height", "0px");
-    
-    $("#end-screen").css("visibility", "visible");
-    $("#start-again").css("visibility", "visible");
+    $("#eat-this").css("display", "none");
+    $("#eat-other").css("display", "none");
+
+    $("#google-maps").css("display", "block");
 
     //more speaking
     var string = placeArray[count].name + "is located at " + placeArray[count].address + ". I hope you have a terrible time, " + text[2];
@@ -304,7 +311,7 @@ function eatThis(event) {
     $("#restaurant-name").text(placeArray[count].name);
     
     //display Restaurant Address with a link to Google Maps
-    $("#restaurant-address").text(placeArray[count].address);
+    $("#information").text(placeArray[count].address);
     $("#google-maps").attr("href", "https://www.google.com/maps/search/?api=1&query=" + placeArray[count].lat + "," + placeArray[count].lng +"&query_place_id=" + placeArray[count].placeid);
 }
 
@@ -321,12 +328,6 @@ function clearContent() {
     
     $("#info-screen").css("visibility", "hidden");
     $("#info-screen").css("height", "0px");
-    
-    $("#end-screen").css("visibility", "hidden");
-    $("#end-screen").css("height", "0px");
-    
-    $("#start-again").css("visibility", "hidden");
-    $("#start-again").css("height", "0px");
 }
 
 
@@ -337,10 +338,10 @@ $("#startagain-btn").on("click", function(event) {
     
     $("#information").empty();
     $("#restaurant-name").empty();
-    $("#restaurant-address").empty();
     $("#google-maps").attr("href", "#"); 
 
     $("#eat-other").off();
+    $("#eat-this").off();
 
     clearContent();
 });
