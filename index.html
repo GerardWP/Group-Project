@@ -115,7 +115,8 @@
         id="info-screen"
         class="inactive container d-flex flex-column align-items-center"
       >
-        <p id="information"></p>
+        <h2 id="restaurant-name"></h2>
+        <p id="information" class="text-center"></p>
         <div class="btn-group" role="group" aria-label="Basic example">
           <button
             id="eat-this"
@@ -127,42 +128,31 @@
           <button
             id="eat-other"
             type="button"
-            class="btn btn-secondary ml-2 btn-radius"
+            class="btn btn-secondary ml-2 mr-2 btn-radius"
           >
             Eat Other Sh*t
           </button>
+
+          <a id="google-maps" href="#" target="_blank">
+            <button
+              id="google-maps-btn"
+              type="button"
+              class="btn btn-secondary btn-radius ml-2 mr-2"
+            >
+              Google Maps?
+            </button>
+          </a>
         </div>
-      </div>
-
-      <div
-        id="end-screen"
-        class="inactive container d-flex flex-column align-items-center"
-      >
-        <h2 id="restaurant-name"></h2>
-        <p id="restaurant-address"></p>
-        <a id="google-maps" href="#" target="_blank">
-          <button
-            id="google-maps-btn"
-            type="button"
-            class="btn btn-secondary btn-radius"
-          >
-            Google Maps?
-          </button>
-        </a>
-      </div>
-
-      <div
-        id="start-again"
-        class="inactive container d-flex flex-column align-items-center"
-      >
         <button
           id="startagain-btn"
           type="button"
-          class="btn btn-secondary mt-3 btn-radius"
+          class="btn btn-secondary mt-2 btn-radius"
         >
           Start Again
         </button>
+
       </div>
+
     </div>
 
     <script src="./assets/javascript/script.js"></script>
