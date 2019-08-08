@@ -19,7 +19,7 @@ var text = [];
 
 //function for loading firebase data into local variables
 function getData() {
-    database.ref("/text-to-speech").once("value", function(snap) {
+    database.ref("/text-to-speech").once("value", function (snap) {
         var data = snap.val();
         prefix = data.prefix;
         slogan = data.slogan;
@@ -65,11 +65,11 @@ function textToSpeech(string) {
         contentType: "application/json",
         data: JSON.stringify(data),
         processData: false,
-        success: function(response) {
+        success: function (response) {
             //convert the base-64 encoded string into a byte array
             audio = Uint8Array.from(atob(response.audioContent), c => c.charCodeAt(0));
         },
-        complete: function() {
+        complete: function () {
             init();
             playByteArray(audio);
         }
@@ -101,7 +101,7 @@ function playByteArray(byteArray) {
     }
 
     let x = context
-        .decodeAudioData(arrayBuffer, function(buffer) {
+        .decodeAudioData(arrayBuffer, function (buffer) {
             buf = buffer;
             play();
         })
@@ -120,7 +120,7 @@ function play() {
 }
 
 function stop() {
-    if(source){
+    if (source) {
         source.disconnect();
         source.stop(0);
         source = null;
@@ -143,7 +143,7 @@ function initAutocomplete() {
 function geolocate() {
     //Check if it can find the current location
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
+        navigator.geolocation.getCurrentPosition(function (position) {
             //Saves the current location in variable as longitutde and latitude
             geolocation = {
                 lat: position.coords.latitude,
@@ -160,7 +160,7 @@ var locLAT, locLNG;
 var apiKey = "AIzaSyAWEtBeR_Jx7m6NFIKjF3y0tgIOxZ2HDek";
 var placeArray;
 
-$("#es-button").on("click", function(e) {
+$("#es-button").on("click", function (e) {
     e.preventDefault();
     var location = $("#autocomplete").val();
 
@@ -169,7 +169,7 @@ $("#es-button").on("click", function(e) {
     $.ajax({
         url: queryURL,
         method: "GET",
-        success: function(response) {
+        success: function (response) {
             locLAT = response.results[0].geometry.location.lat;
             locLNG = response.results[0].geometry.location.lng;
             refineResults(locLAT, locLNG);
@@ -178,7 +178,7 @@ $("#es-button").on("click", function(e) {
     });
 });
 
-$("#current-location").on("click", function(event) {
+$("#current-location").on("click", function (event) {
     event.preventDefault();
     locLAT = geolocation.lat;
     locLNG = geolocation.lng;
@@ -198,7 +198,7 @@ function refineResults(locLAT, locLNG) {
         "&radius=5000&type=restaurant&key=" +
         apiKey;
 
-    jQuery.ajaxPrefilter(function(options) {
+    jQuery.ajaxPrefilter(function (options) {
         if (options.crossDomain && jQuery.support.cors) {
             options.url = "https://cors-anywhere.herokuapp.com/" + options.url;
         }
@@ -208,7 +208,7 @@ function refineResults(locLAT, locLNG) {
         url: searchURL,
         method: "GET",
         cache: false
-    }).then(function(resp) {
+    }).then(function (resp) {
         console.log(resp);
         var newURL =
             "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" +
@@ -220,7 +220,7 @@ function refineResults(locLAT, locLNG) {
         console.log(resp.results.length);
         console.log(resp.results);
 
-        placeArray = resp.results.map(function(item) {
+        placeArray = resp.results.map(function (item) {
             return {
                 rating: item.rating,
                 name: item.name,
@@ -231,13 +231,13 @@ function refineResults(locLAT, locLNG) {
             };
         });
 
-        placeArray.sort(function(val1, val2) {
+        placeArray.sort(function (val1, val2) {
             return val1.rating - val2.rating;
         });
 
         //For debugging purposes only
         console.log("-----------");
-        for(var i=0; i<placeArray.length; i++) {
+        for (var i = 0; i < placeArray.length; i++) {
             console.log(placeArray[i]);
         }
 
@@ -259,7 +259,7 @@ function hideAndGo() {
     $("#google-maps").css("display", "none");
 
     $("#spinner").removeClass("loader");
-    
+
     getAndPlay();
     $("#eat-other").on("click", eatOther);
     $("#eat-this").on("click", eatThis);
@@ -279,24 +279,24 @@ function getAndPlay() {
     stop();
     text = randomWords();
     var string =
-    text[0] +
-    placeArray[count].name +
-    "? It received " +
-    placeArray[count].rating +
-    " out of 5 stars. As their famous saying goes. " +
-    text[1];
-    
+        text[0] +
+        placeArray[count].name +
+        "? It received " +
+        placeArray[count].rating +
+        " out of 5 stars. As their famous saying goes. " +
+        text[1];
+
     textToSpeech(string);
-    
+
     //display textToSpeech
     $("#information").text(string);
-    
+
 }
 
 function eatThis(event) {
     event.preventDefault();
     stop();
-    
+
     $("#eat-this").css("display", "none");
     $("#eat-other").css("display", "none");
 
@@ -306,13 +306,13 @@ function eatThis(event) {
     var string = placeArray[count].name + "is located at " + placeArray[count].address + ". I hope you have a terrible time, " + text[2];
     textToSpeech(string);
 
-    
+
     //display Restaurant Name
     $("#restaurant-name").text(placeArray[count].name);
-    
+
     //display Restaurant Address with a link to Google Maps
     $("#information").text(placeArray[count].address);
-    $("#google-maps").attr("href", "https://www.google.com/maps/search/?api=1&query=" + placeArray[count].lat + "," + placeArray[count].lng +"&query_place_id=" + placeArray[count].placeid);
+    $("#google-maps").attr("href", "https://www.google.com/maps/search/?api=1&query=" + placeArray[count].lat + "," + placeArray[count].lng + "&query_place_id=" + placeArray[count].placeid);
 }
 
 function start() {
@@ -325,20 +325,20 @@ function start() {
 
 function clearContent() {
     $("#start-screen").css("visibility", "visible");
-    
+
     $("#info-screen").css("visibility", "hidden");
-    $("#info-screen").css("height", "0px");
+    // $("#info-screen").css("height", "0px");
 }
 
 
-$("#startagain-btn").on("click", function(event) {
+$("#startagain-btn").on("click", function (event) {
     event.preventDefault();
     count = 0;
     placeArray = [];
-    
+
     $("#information").empty();
     $("#restaurant-name").empty();
-    $("#google-maps").attr("href", "#"); 
+    $("#google-maps").attr("href", "#");
 
     $("#eat-other").off();
     $("#eat-this").off();
@@ -346,6 +346,6 @@ $("#startagain-btn").on("click", function(event) {
     clearContent();
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     start();
 });
