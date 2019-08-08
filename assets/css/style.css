@@ -1,211 +1,213 @@
 html {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 *,
 *::before,
 *::after {
-    box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 body {
-    background: #212223;
-    font-family: 'Varela Round', sans-serif;
+  background: url(../images/bg-6.jpg) #212223;
+  background-size: 650px;
+  font-family: "Varela Round", sans-serif;
+  padding-top: 230px;
 }
 
 h6 {
-    margin-bottom: 12px;
+  margin-bottom: 12px;
 }
 
-
 #es-logo {
-    max-width: 500px;
-    z-index: 100;
+  max-width: 500px;
+  z-index: 100;
 }
 
 #es-button {
-    width: 100px;
+  width: 100px;
 }
 
 .inp-radius {
-    border-radius: 50px 0px 0px 50px;
-    width: 250px;
+  border-radius: 50px 0px 0px 50px;
+  width: 250px;
 }
 
 .btn-radius {
-    border-radius: 0px 50px 50px 0px;
-    background: #ef413a;
-    border: 1px solid #ef413a;
+  border-radius: 0px 50px 50px 0px;
+  background: #ef413a;
+  border: 1px solid #ef413a;
 }
 
 .btn2 {
-    border-radius: 50px;
-    letter-spacing: .03em;
+  border-radius: 50px;
+  letter-spacing: 0.03em;
 }
 
 .btn-radius:hover {
-    background: #cc3737;
-    border: 1px solid #ef413a;
+  background: #cc3737;
+  border: 1px solid #ef413a;
 }
 
+.btn-group {
+  margin-bottom: 8px;
+}
 .foodimg {
-    position: absolute;
-    transition-duration: 200ms;
+  position: absolute;
+  transition-duration: 200ms;
 }
 
 #chicken {
-    top: -10px;
-    right: 300px;
-    max-width: 200px;
+  top: -10px;
+  right: 300px;
+  max-width: 200px;
 }
 
 #ramen {
-    top: 200px;
-    right: -20px;
-    max-width: 200px;
+  top: 200px;
+  right: -20px;
+  max-width: 200px;
 }
 
 #cookies {
-    top: -2px;
-    left: -10px;
-    max-width: 200px;
+  top: -2px;
+  left: -10px;
+  max-width: 200px;
 }
 
 #steak {
-    bottom: -35px;
-    right: 200px;
-    max-width: 250px;
+  bottom: -35px;
+  right: 200px;
+  max-width: 250px;
 }
 
 #spag {
-    top: 400px;
-    left: -30px;
-    max-width: 200px;
+  top: 400px;
+  left: -30px;
+  max-width: 200px;
 }
 
 #pancakes {
-    bottom: -35px;
-    left: 200px;
-    max-width: 200px;
+  bottom: -35px;
+  left: 200px;
+  max-width: 200px;
 }
 
 #eat-this,
 #eat-other,
 #google-maps-btn,
 #startagain-btn {
-    border-radius: 50px 50px 50px 50px;
+  border-radius: 50px 50px 50px 50px;
+  height: 40px;
+  min-height: 40px;
 }
 
 #restaurant-name {
-    color: #fff
+  color: #fff;
 }
 
 #restaurant-address {
-    color: #fff
+  color: #fff;
 }
 
 #restaurant-address:hover {
-    color: red
+  color: red;
 }
 
 #information {
-    height: 500px;
-    width: 500px;
-    background: #ef413a;
-    color: #fff;
+  width: 500px;
+  max-width: 95%;
+  padding: 20px;
+  border-radius: 8px;
+  /* margin-top: -25px; */
+  background: #ef413a;
+  color: #fff;
 }
 
 #info-screen {
-    visibility: hidden;
-    height: 0;
+  visibility: hidden;
 }
 
 #start-again {
-    margin-top: 150px;
+  margin-top: 150px;
 }
 
-@media(max-width: 900px) {
+@media (max-width: 900px) {
+  #es-logo {
+    max-width: 400px;
+  }
 
-    #es-logo {
-        max-width: 400px;
-    }
+  #chicken {
+    top: -10px;
+    right: 100px;
+    max-width: 180px;
+  }
 
-    #chicken {
-        top: -10px;
-        right: 100px;
-        max-width: 180px;
-    }
+  #ramen {
+    top: 90px;
+    right: -20px;
+    max-width: 120px;
+  }
 
-    #ramen {
-        top: 90px;
-        right: -20px;
-        max-width: 120px;
-    }
+  #cookies {
+    top: -2px;
+    left: -10px;
+    max-width: 160px;
+  }
 
-    #cookies {
-        top: -2px;
-        left: -10px;
-        max-width: 160px;
-    }
+  #steak {
+    bottom: -35px;
+    right: 50px;
+    max-width: 200px;
+  }
 
-    #steak {
-        bottom: -35px;
-        right: 50px;
-        max-width: 200px;
-    }
+  #spag {
+    top: 500px;
+    left: -30px;
+    max-width: 150px;
+  }
 
-    #spag {
-        top: 500px;
-        left: -30px;
-        max-width: 150px;
-    }
-
-    #pancakes {
-        bottom: -35px;
-        left: 100px;
-        max-width: 160px;
-    }
-
-
+  #pancakes {
+    bottom: -35px;
+    left: 100px;
+    max-width: 160px;
+  }
 }
 
-@media(max-width: 450px) {
+@media (max-width: 450px) {
+  #es-logo {
+    max-width: 400px;
+  }
 
-    #es-logo {
-        max-width: 400px;
-    }
+  #chicken {
+    top: -10px;
+    right: 0px;
+    max-width: 150px;
+  }
 
-    #chicken {
-        top: -10px;
-        right: 0px;
-        max-width: 150px;
-    }
+  #ramen {
+    display: none;
+  }
 
-    #ramen {
-        display: none;
-    }
+  #cookies {
+    top: -2px;
+    left: -10px;
+    max-width: 160px;
+  }
 
-    #cookies {
-        top: -2px;
-        left: -10px;
-        max-width: 160px;
-    }
+  #steak {
+    bottom: -35px;
+    right: -20px;
+    max-width: 150px;
+  }
 
-    #steak {
-        bottom: -35px;
-        right: -20px;
-        max-width: 150px;
-    }
+  #spag {
+    display: none;
+  }
 
-    #spag {
-        display: none
-    }
-
-    #pancakes {
-        bottom: -35px;
-        left: 0px;
-        max-width: 160px;
-    }
-
-
+  #pancakes {
+    bottom: -35px;
+    left: 0px;
+    max-width: 160px;
+  }
 }
