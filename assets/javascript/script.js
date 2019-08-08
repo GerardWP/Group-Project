@@ -15,6 +15,7 @@ var database = firebase.database();
 var prefix = [];
 var slogan = [];
 var insult = [];
+var text = [];
 
 //function for loading firebase data into local variables
 function getData() {
@@ -77,6 +78,7 @@ function textToSpeech(string) {
 
 var context; // Audio context
 var buf; // Audio buffer
+var source;
 
 //initialize audio context for each new audio file
 function init() {
@@ -109,12 +111,20 @@ function playByteArray(byteArray) {
 // Play the loaded file
 function play() {
     // Create a source node from the buffer
-    var source = context.createBufferSource();
+    source = context.createBufferSource();
     source.buffer = buf;
     // Connect to the final output node (the speakers)
     source.connect(context.destination);
     // Play immediately
     let x = source.start(0);
+}
+
+function stop() {
+    if(source){
+        source.disconnect();
+        source.stop(0);
+        source = null;
+    }
 }
 
 //Autofill suburb field using Google Places
@@ -258,7 +268,8 @@ function eatOther(event) {
 
 //function to get current restaurant
 function getAndPlay() {
-    var text = randomWords();
+    stop();
+    text = randomWords();
     var string =
     text[0] +
     placeArray[count].name +
@@ -276,12 +287,18 @@ function getAndPlay() {
 
 function eatThis(event) {
     event.preventDefault();
-
+    stop();
+    
     $("#info-screen").css("visibility", "hidden");
     $("#info-screen").css("height", "0px");
     
     $("#end-screen").css("visibility", "visible");
     $("#start-again").css("visibility", "visible");
+
+    //more speaking
+    var string = placeArray[count].name + "is located at " + placeArray[count].address + ". I hope you have a terrible time, " + text[2];
+    textToSpeech(string);
+
     
     //display Restaurant Name
     $("#restaurant-name").text(placeArray[count].name);
