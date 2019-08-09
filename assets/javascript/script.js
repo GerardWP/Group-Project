@@ -172,6 +172,8 @@ $("#es-button").on("click", function (e) {
         success: function (response) {
             locLAT = response.results[0].geometry.location.lat;
             locLNG = response.results[0].geometry.location.lng;
+            $("#spinner").addClass("loader");
+
             refineResults(locLAT, locLNG);
 
         }
@@ -180,6 +182,7 @@ $("#es-button").on("click", function (e) {
 
 $("#current-location").on("click", function (event) {
     event.preventDefault();
+    $("#spinner").addClass("loader");
     locLAT = geolocation.lat;
     locLNG = geolocation.lng;
     refineResults(locLAT, locLNG);
@@ -325,9 +328,9 @@ function start() {
 
 function clearContent() {
     $("#start-screen").css("visibility", "visible");
+    $("#start-screen").css("height", "");
 
     $("#info-screen").css("visibility", "hidden");
-    // $("#info-screen").css("height", "0px");
 }
 
 
@@ -335,6 +338,7 @@ $("#startagain-btn").on("click", function (event) {
     event.preventDefault();
     count = 0;
     placeArray = [];
+    stop();
 
     $("#information").empty();
     $("#restaurant-name").empty();

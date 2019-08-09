@@ -106,14 +106,6 @@ h6 {
   color: #fff;
 }
 
-#restaurant-address {
-  color: #fff;
-}
-
-#restaurant-address:hover {
-  color: red;
-}
-
 #information {
   width: 500px;
   max-width: 95%;
@@ -210,4 +202,25 @@ h6 {
     left: 0px;
     max-width: 160px;
   }
+}
+
+.loader {
+  border: 8px solid #fff;
+  border-radius: 50%;
+  border-top: 8px solid #ef413a;
+  width: 40px;
+  height: 40px;
+  margin-top: 20px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
