@@ -39,6 +39,7 @@ h6 {
   border: 1px solid #ef413a;
 }
 
+
 .btn2 {
   border-radius: 50px;
   letter-spacing: 0.03em;
@@ -49,9 +50,14 @@ h6 {
   border: 1px solid #ef413a;
 }
 
+.btn:active {
+  background: #cc3737 !important;
+}
+
 .btn-group {
   margin-bottom: 8px;
 }
+
 .foodimg {
   position: absolute;
   transition-duration: 200ms;
@@ -104,6 +110,7 @@ h6 {
 
 #restaurant-name {
   color: #fff;
+  margin-top: -20px;
 }
 
 #information {
@@ -112,7 +119,9 @@ h6 {
   padding: 20px;
   border-radius: 8px;
   /* margin-top: -25px; */
-  background: #ef413a;
+  /* background: #ef413a; */
+  background: #21222390;
+  border: 2px solid #ef413a;
   color: #fff;
 }
 
@@ -216,11 +225,21 @@ h6 {
 }
 
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
