@@ -286,7 +286,7 @@ function getAndPlay() {
         placeArray[count].name +
         "? It received " +
         placeArray[count].rating +
-        " out of 5 stars. As their famous saying goes. " +
+        " out of 5 stars. " + placeArray[count].name + ". " +
         text[1];
 
     textToSpeech(string);
