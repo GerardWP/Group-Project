@@ -157,7 +157,7 @@ function geolocate() {
 which we get from either the input val(), or the users current location  */
 
 var locLAT, locLNG;
-var apiKey = "AIzaSyAWEtBeR_Jx7m6NFIKjF3y0tgIOxZ2HDek";
+var apiKey = "AIzaSyBymZZ_4KpRi_3VkDn653yZiq-lW3Dq-w8";
 var placeArray;
 
 $("#es-button").on("click", function (e) {
